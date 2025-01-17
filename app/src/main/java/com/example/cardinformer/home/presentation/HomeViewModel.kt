@@ -2,9 +2,10 @@ package com.example.cardinformer.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cardinformer.core.domain.CardInformation
+import com.example.cardinformer.core.domain.model.CardInf
 import com.example.cardinformer.core.utils.NetworkError
-import com.example.cardinformer.home.domain.usecase.GetCardInformationUseCase
+import com.example.cardinformer.core.utils.debounce
+import com.example.cardinformer.home.domain.usecase.GetCardInfUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,16 +16,39 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getCardInformationUseCase: GetCardInformationUseCase
+    private val getCardInfUseCase: GetCardInfUseCase
 ) : ViewModel() {
+
+    private var lastExpression = ""
 
     private val _uiState = MutableStateFlow<HomeScreenUiState>(HomeScreenUiState.Empty)
     val uiState: StateFlow<HomeScreenUiState> = _uiState.asStateFlow()
 
-    var card: CardInformation = CardInformation()
+    private val searchDebounceAction: (String) -> Unit = debounce(
+        delayMillis = 2_000L,
+        coroutineScope = viewModelScope,
+        useLastParam = true
+    ) { changedText ->
+        if (changedText != lastExpression && changedText.isNotBlank()) {
+            getCardInformation(changedText)
+            _uiState.value = HomeScreenUiState.Loading
+        } else {
+            _uiState.value = HomeScreenUiState.Empty
+        }
+    }
 
-    fun getCardInformation(bin: String) = viewModelScope.launch(Dispatchers.Main) {
-        val result: Result<CardInformation> = getCardInformationUseCase(bin)
+    fun searchDebounce(expression: String) {
+        if (expression.isBlank()) clearSearch()
+        searchDebounceAction(expression)
+    }
+
+    private fun clearSearch() {
+        lastExpression = ""
+        _uiState.value = HomeScreenUiState.Empty
+    }
+
+    private fun getCardInformation(bin: String) = viewModelScope.launch(Dispatchers.Main) {
+        val result: Result<CardInf> = getCardInfUseCase(bin)
         val newState = when (result.exceptionOrNull()) {
             is NetworkError.ServerError -> HomeScreenUiState.Error
             is NetworkError.NoData -> HomeScreenUiState.Empty
@@ -34,5 +58,6 @@ class HomeViewModel @Inject constructor(
             } ?: HomeScreenUiState.Empty
         }
         _uiState.value = newState
+
     }
 }
