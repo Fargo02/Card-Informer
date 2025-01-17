@@ -12,8 +12,8 @@ class CardInfRepositoryImpl @Inject constructor(
     private val cardInfNetworkClient: CardInfNetworkClient
 ) : CardInfRepository {
 
-    override suspend fun getCardInf(): Result<CardInf> =
+    override suspend fun getCardInf(bin: String): Result<CardInf> =
         withContext(Dispatchers.IO) {
-            cardInfNetworkClient.execute().toCardInf()
+            cardInfNetworkClient.execute(bin).toCardInf()
         }
 }

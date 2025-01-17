@@ -16,7 +16,10 @@ abstract class RetrofitNetworkClient : NetworkClient {
             try {
                 Result.success(request())
             } catch (e: HttpException) {
-                Result.failure(NetworkError.ServerError("", e.toString()))
+                when (e.code()) {
+                    404 -> Result.failure(NetworkError.NoData())
+                    else -> Result.failure(NetworkError.ServerError(e.message()))
+                }
             }
         }
     }

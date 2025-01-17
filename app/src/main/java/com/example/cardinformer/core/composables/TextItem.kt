@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun TextItem(label: String, value: String) {
+fun TextItem(label: String, value: String?) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
@@ -20,7 +20,7 @@ fun TextItem(label: String, value: String) {
             color = MaterialTheme.colorScheme.onBackground
         )
         Text(
-            text = value,
+            text = value ?: "No",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.primary
         )

@@ -2,7 +2,9 @@ package com.example.cardinformer.home.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -10,7 +12,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.cardinformer.R
 import com.example.cardinformer.core.composables.TextItem
 import com.example.cardinformer.core.domain.model.CardInf
 
@@ -19,31 +23,6 @@ fun HomeScreenContent(
     modifier: Modifier = Modifier,
     card: CardInf
 ) {
-    val groupedFields = listOf(
-        "Card Information" to listOf(
-            "Number Length" to card.numberLength.toString(),
-            "Luhn Check" to if (card.luhn) "Yes" else "No",
-            "Scheme" to card.scheme,
-            "Type" to card.type,
-            "Brand" to card.brand,
-            "Prepaid" to if (card.prepaid) "Yes" else "No"
-        ),
-        "Country Information" to listOf(
-            "Country Numeric" to card.countryNumeric,
-            "Country Code" to card.countryAlpha2,
-            "Country Name" to card.countryName,
-            "Country Emoji" to card.countryEmoji,
-            "Currency" to card.countryCurrency,
-            "Latitude" to card.countryLatitude.toString(),
-            "Longitude" to card.countryLongitude.toString()
-        ),
-        "Bank Information" to listOf(
-            "Bank Name" to card.bankName,
-            "Bank URL" to card.bankUrl,
-            "Bank Phone" to card.bankPhone,
-            "Bank City" to card.bankCity
-        )
-    )
 
     Column(
         modifier = modifier
@@ -52,11 +31,94 @@ fun HomeScreenContent(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        groupedFields.forEach { (title, fields) ->
-            Text(text = title, style = MaterialTheme.typography.headlineSmall)
-            fields.forEach { (label, value) ->
-                TextItem(label = label, value = value)
-            }
-        }
+        Text(
+            text = stringResource(R.string.card_info_title),
+            style = MaterialTheme.typography.headlineMedium
+        )
+
+        TextItem(
+            label = stringResource(R.string.number_length),
+            value = card.numberLength?.toString() ?: stringResource(R.string.no)
+        )
+        TextItem(
+            label = stringResource(R.string.luhn_check),
+            value = if (card.luhn) stringResource(R.string.yes) else stringResource(R.string.no)
+        )
+        TextItem(
+            label = stringResource(R.string.scheme),
+            value = card.scheme ?: stringResource(R.string.no)
+        )
+        TextItem(
+            label = stringResource(R.string.type),
+            value = card.type ?: stringResource(R.string.no)
+        )
+        TextItem(
+            label = stringResource(R.string.brand),
+            value = card.brand ?: stringResource(R.string.no)
+        )
+        TextItem(
+            label = stringResource(R.string.prepaid),
+            value = if (card.prepaid) stringResource(R.string.yes) else stringResource(R.string.no)
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = stringResource(R.string.country_info_title),
+            style = MaterialTheme.typography.headlineSmall
+        )
+
+        TextItem(
+            label = stringResource(R.string.country_numeric),
+            value = card.countryNumeric ?: stringResource(R.string.no)
+        )
+        TextItem(
+            label = stringResource(R.string.country_code),
+            value = card.countryAlpha2 ?: stringResource(R.string.no)
+        )
+        TextItem(
+            label = stringResource(R.string.country_name),
+            value = card.countryName ?: stringResource(R.string.no)
+        )
+        TextItem(
+            label = stringResource(R.string.country_emoji),
+            value = card.countryEmoji ?: stringResource(R.string.no)
+        )
+        TextItem(
+            label = stringResource(R.string.currency),
+            value = card.countryCurrency ?: stringResource(R.string.no)
+        )
+        TextItem(
+            label = stringResource(R.string.latitude),
+            value = card.countryLatitude?.toString() ?: stringResource(R.string.no)
+        )
+        TextItem(
+            label = stringResource(R.string.longitude),
+            value = card.countryLongitude?.toString() ?: stringResource(R.string.no)
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = stringResource(R.string.bank_info_title),
+            style = MaterialTheme.typography.headlineSmall
+        )
+
+        TextItem(
+            label = stringResource(R.string.bank_name),
+            value = card.bankName ?: stringResource(R.string.no)
+        )
+        TextItem(
+            label = stringResource(R.string.bank_url),
+            value = card.bankUrl ?: stringResource(R.string.no)
+        )
+        TextItem(
+            label = stringResource(R.string.bank_phone),
+            value = card.bankPhone ?: stringResource(R.string.no)
+        )
+        TextItem(
+            label = stringResource(R.string.bank_city),
+            value = card.bankCity ?: stringResource(R.string.no)
+        )
     }
 }

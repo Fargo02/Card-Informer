@@ -34,7 +34,8 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     uiState: HomeScreenUiState,
     navToHistory: () -> Unit,
-    getInformation: (String) -> Unit
+    getInformation: (String) -> Unit,
+    updateInformation: (String) -> Unit
 ) {
 
     var binText by rememberSaveable { mutableStateOf("") }
@@ -46,6 +47,7 @@ fun HomeScreen(
         topBar = {
             TopBar(
                 modifier = Modifier.shadow(4.dp),
+                title = stringResource(id = R.string.app_name)
             )
         }
     ) { paddingValues ->
@@ -59,16 +61,16 @@ fun HomeScreen(
                     .fillMaxWidth()
                     .padding(16.dp),
                 text = binText,
-                placeHolderText = "",
+                placeHolderText = stringResource(R.string.enter_the_bin_of_the_card),
                 singleLine = true,
                 onValueChange = { newText -> binText = newText }
             )
             when (uiState) {
-                is HomeScreenUiState.Empty -> HomeScreenEmpty()
+                is HomeScreenUiState.Start -> HomeScreenStart()
                 is HomeScreenUiState.Error -> HomeScreenError()
                 is HomeScreenUiState.Loading -> HomeScreenLoading()
                 is HomeScreenUiState.NoInternet -> HomeScreenNoInternet(
-                    getInformation = getInformation,
+                    getInformation = updateInformation,
                     bin = binText
                 )
 
@@ -79,8 +81,17 @@ fun HomeScreen(
 }
 
 @Composable
-private fun HomeScreenEmpty(modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxSize())
+private fun HomeScreenStart(modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxSize()) {
+        Text(
+            modifier = Modifier.align(Alignment.Center),
+            style = MaterialTheme.typography.bodyLarge,
+            fontSize = 20.sp,
+            textAlign = TextAlign.Center,
+            text = stringResource(R.string.statrt_information),
+            color = MaterialTheme.colorScheme.primary,
+        )
+    }
 }
 
 @Composable

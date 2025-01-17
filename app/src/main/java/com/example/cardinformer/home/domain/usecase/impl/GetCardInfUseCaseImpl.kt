@@ -10,27 +10,28 @@ class GetCardInfUseCaseImpl @Inject constructor(
 ) : GetCardInfUseCase {
 
     override suspend operator fun invoke(bin: String): Result<CardInf> {
-        return cardInfRepository.getCardInf()
-//        return Result.success(
-//            CardInf(
-//                numberLength = 2367,
-//                luhn = false,
-//                scheme = "dictas",
-//                type = "utamur",
-//                brand = "dico",
-//                prepaid = false,
-//                countryNumeric = "Spain",
-//                countryAlpha2 = "Guinea-Bissau",
-//                countryName = "Brazil",
-//                countryEmoji = "Central African Republic",
-//                countryCurrency = "Afghanistan",
-//                countryLatitude = 4423,
-//                countryLongitude = 2221,
-//                bankName = "Haley Holland",
-//                bankUrl = "https://www.google.com/#q=dignissim",
-//                bankPhone = "(337) 364-7223",
-//                bankCity = "Haddonfield"
-//            )
-//        )
+        //return cardInfRepository.getCardInf(bin)
+        return Result.success(
+            CardInf(
+                numberLength = null,
+                luhn = false,
+                scheme = null,
+                type = null,
+                brand = null,
+                prepaid = false,
+                countryNumeric = null,
+                countryAlpha2 = null,
+                countryName = null,
+                countryEmoji = null,
+                countryCurrency = null,
+                countryLatitude = null,
+                countryLongitude = null,
+                bankName = null,
+                bankUrl = null,
+                bankPhone = null,
+                bankCity = null
+
+            )
+        )
     }
 }

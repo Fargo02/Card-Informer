@@ -21,7 +21,7 @@ class HomeViewModel @Inject constructor(
 
     private var lastExpression = ""
 
-    private val _uiState = MutableStateFlow<HomeScreenUiState>(HomeScreenUiState.Empty)
+    private val _uiState = MutableStateFlow<HomeScreenUiState>(HomeScreenUiState.Start)
     val uiState: StateFlow<HomeScreenUiState> = _uiState.asStateFlow()
 
     private val searchDebounceAction: (String) -> Unit = debounce(
@@ -30,10 +30,8 @@ class HomeViewModel @Inject constructor(
         useLastParam = true
     ) { changedText ->
         if (changedText != lastExpression && changedText.isNotBlank()) {
+            lastExpression = changedText
             getCardInformation(changedText)
-            _uiState.value = HomeScreenUiState.Loading
-        } else {
-            _uiState.value = HomeScreenUiState.Empty
         }
     }
 
@@ -44,18 +42,19 @@ class HomeViewModel @Inject constructor(
 
     private fun clearSearch() {
         lastExpression = ""
-        _uiState.value = HomeScreenUiState.Empty
+        _uiState.value = HomeScreenUiState.Start
     }
 
-    private fun getCardInformation(bin: String) = viewModelScope.launch(Dispatchers.Main) {
+    fun getCardInformation(bin: String) = viewModelScope.launch(Dispatchers.Main) {
+        _uiState.value = HomeScreenUiState.Loading
         val result: Result<CardInf> = getCardInfUseCase(bin)
         val newState = when (result.exceptionOrNull()) {
             is NetworkError.ServerError -> HomeScreenUiState.Error
-            is NetworkError.NoData -> HomeScreenUiState.Empty
+            is NetworkError.NoData -> HomeScreenUiState.Start
             is NetworkError.NoInternet -> HomeScreenUiState.NoInternet
             else -> result.getOrNull()?.let {
                 HomeScreenUiState.Content(it)
-            } ?: HomeScreenUiState.Empty
+            } ?: HomeScreenUiState.Start
         }
         _uiState.value = newState
 

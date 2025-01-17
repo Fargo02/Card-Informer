@@ -1,7 +1,11 @@
 package com.example.cardinformer.core.di
 
+import com.example.cardinformer.core.data.CardInfRepositoryImpl
 import com.example.cardinformer.core.data.network.AuthorizationInterceptor
 import com.example.cardinformer.core.data.network.BinListApiService
+import com.example.cardinformer.core.data.network.CardInfNetworkClient
+import com.example.cardinformer.core.domain.repository.CardInfRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +19,7 @@ const val BIN_LIST_BASE_URL = "https://lookup.binlist.net/"
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+object NetworkModuleProvider {
 
     @Provides
     @Singleton
@@ -37,4 +41,23 @@ object NetworkModule {
             .build()
             .create(BinListApiService::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideCardInfNetworkClient(
+        binListApiService: BinListApiService
+    ): CardInfNetworkClient {
+        return CardInfNetworkClient(binListApiService)
+    }
 }
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class NetworkModuleBinder() {
+
+    @Binds
+    abstract fun bindCardInfRepository(
+        cardInfRepositoryImpl: CardInfRepositoryImpl
+    ): CardInfRepository
+}
+
