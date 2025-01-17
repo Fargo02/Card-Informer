@@ -18,6 +18,6 @@ fun HomeScreenRoute(
     HomeScreen(
         uiState = uiState,
         navToHistory = navToHistory,
-        getInformation = { viewModel.getCardInformation(it) }
+        getInformation = { viewModel.searchDebounce(it) }
     )
 }

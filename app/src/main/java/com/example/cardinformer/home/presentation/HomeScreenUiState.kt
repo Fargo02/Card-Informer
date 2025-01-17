@@ -1,10 +1,11 @@
 package com.example.cardinformer.home.presentation
 
-import com.example.cardinformer.core.domain.CardInformation
+import com.example.cardinformer.core.domain.model.CardInf
 
 sealed interface HomeScreenUiState {
     data object Empty: HomeScreenUiState
     data object Error: HomeScreenUiState
+    data object Loading: HomeScreenUiState
     data object NoInternet: HomeScreenUiState
-    data class Content(val card: CardInformation): HomeScreenUiState
+    data class Content(val card: CardInf): HomeScreenUiState
 }

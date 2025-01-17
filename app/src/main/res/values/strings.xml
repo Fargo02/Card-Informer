@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">Card informer</string>
+    <string name="card_information">Card Information</string>
+    <string name="number_length">Number Length</string>
+    <string name="luhn_check">Luhn Check</string>
+    <string name="scheme">Scheme</string>
+    <string name="type">Type</string>
+    <string name="brand">Brand</string>
+    <string name="prepaid">Prepaid</string>
+    <string name="country_information">Country Information</string>
+    <string name="country_numeric">Country Numeric</string>
+    <string name="country_code">Country Code</string>
+    <string name="country_name">Country Name</string>
+    <string name="country_emoji">Country Emoji</string>
+    <string name="currency">Currency</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="bank_information">Bank Information</string>
+    <string name="bank_name">Bank Name</string>
+    <string name="bank_url">Bank URL</string>
+    <string name="bank_phone">Bank Phone</string>
+    <string name="bank_city">Bank City</string>
+    <string name="update">Обновить</string>
 </resources>
