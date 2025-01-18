@@ -1,5 +1,6 @@
 <resources>
     <!-- Card Information -->
+    <string name="bin">BIN</string>
     <string name="card_info_title">Card Information</string>
     <string name="number_length">Number Length</string>
     <string name="luhn_check">Luhn Check</string>
@@ -33,4 +34,7 @@
     <string name="enter_the_bin_of_the_card">Введите BIN карты…</string>
     <string name="statrt_information">Введите BIN (первые 6–8 цифр номера карты),
         чтобы узнать информацию о банке, стране выпуска и типе карты.</string>
+    <string name="collapse">Свернуть</string>
+    <string name="expand">Развернуть</string>
+    <string name="history_is_empty">История запросов пуста</string>
 </resources>

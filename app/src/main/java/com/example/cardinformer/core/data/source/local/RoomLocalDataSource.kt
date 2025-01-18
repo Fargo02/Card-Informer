@@ -18,21 +18,13 @@ class RoomLocalDataSource @Inject constructor(
         }
     }
 
-    override fun getCardInfByBin(bin: Int): Flow<CardInf> {
-        return cardInfHistoryDao.getCardInfByBin(bin).map { cardInfEntity ->
-            cardInfEntity.toCardInf()
-        }
-    }
 
     override suspend fun addCardInf(cardInf: CardInf) {
         cardInfHistoryDao.addCardInf(cardInf.toCardInfEntity())
     }
 
-    override suspend fun updateCardInf(cardInf: CardInf) {
-        cardInfHistoryDao.updateCardInf(cardInf.toCardInfEntity())
-    }
 
     override suspend fun delete(cardInf: CardInf) {
-        cardInfHistoryDao.updateCardInf(cardInf.toCardInfEntity())
+        cardInfHistoryDao.delete(cardInf.toCardInfEntity())
     }
 }

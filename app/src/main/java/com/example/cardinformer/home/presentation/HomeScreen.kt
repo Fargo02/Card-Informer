@@ -69,14 +69,19 @@ fun HomeScreen(
 
 @Composable
 private fun HomeScreenStart(modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp),
+        contentAlignment = Alignment.Center
+    ) {
         Text(
-            modifier = Modifier.align(Alignment.Center),
-            style = MaterialTheme.typography.bodyLarge,
-            fontSize = 20.sp,
-            textAlign = TextAlign.Center,
             text = stringResource(R.string.statrt_information),
-            color = MaterialTheme.colorScheme.primary,
+            style = MaterialTheme.typography.bodyLarge.copy(
+                fontSize = 20.sp,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.primary
+            )
         )
     }
 }

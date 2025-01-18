@@ -26,7 +26,7 @@ fun TextField(
     text: String,
     placeHolderText: String,
     singleLine: Boolean = false,
-    placeholderTextColor: Color = MaterialTheme.colorScheme.onSecondary,
+    placeholderTextColor: Color = MaterialTheme.colorScheme.primary,
     textColor: Color = MaterialTheme.colorScheme.onSurface,
     disabledBorderColor: Color = MaterialTheme.colorScheme.onPrimary,
     unfocusedBorderColor: Color = MaterialTheme.colorScheme.onPrimary,

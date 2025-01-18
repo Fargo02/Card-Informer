@@ -18,12 +18,6 @@ interface CardInfHistoryDao {
     @Insert
     fun addCardInf(cardInf: CardInfEntity)
 
-    @Update
-    fun updateCardInf(cardInf: CardInfEntity)
-
-    @Query("SELECT * FROM cardinfentity WHERE bin=:bin")
-    fun getCardInfByBin(bin: Int): Flow<CardInfEntity>
-
     @Delete
     fun delete(cardInf: CardInfEntity)
 }

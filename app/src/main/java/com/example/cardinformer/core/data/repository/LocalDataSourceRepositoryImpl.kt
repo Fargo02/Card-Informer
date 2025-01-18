@@ -12,11 +12,7 @@ class LocalDataSourceRepositoryImpl @Inject constructor(
 
     override fun getAllCardInf(): Flow<List<CardInf>> = localDataSource.getAllCardInf()
 
-    override fun getCardInfByBin(bin: Int): Flow<CardInf> = localDataSource.getCardInfByBin(bin)
-
     override suspend fun addCardInf(cardInf: CardInf) = localDataSource.addCardInf(cardInf)
-
-    override suspend fun updateCardInf(cardInf: CardInf) = localDataSource.updateCardInf(cardInf)
 
     override suspend fun delete(cardInf: CardInf) = localDataSource.delete(cardInf)
 }
