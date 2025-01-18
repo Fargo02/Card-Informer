@@ -37,4 +37,5 @@
     <string name="collapse">Свернуть</string>
     <string name="expand">Развернуть</string>
     <string name="history_is_empty">История запросов пуста</string>
+    <string name="clear_text">Clear text</string>
 </resources>

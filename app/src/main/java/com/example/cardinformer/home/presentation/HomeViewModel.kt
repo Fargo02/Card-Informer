@@ -47,7 +47,7 @@ class HomeViewModel @Inject constructor(
 
     fun getCardInformation(bin: String) = viewModelScope.launch(Dispatchers.Main) {
         _uiState.value = HomeScreenUiState.Loading
-        val result: Result<CardInf> = getCardInfUseCase(bin)
+        val result: Result<CardInf> = getCardInfUseCase(bin.replace("\\s".toRegex(), ""))
         val newState = when (result.exceptionOrNull()) {
             is NetworkError.ServerError -> HomeScreenUiState.Error
             is NetworkError.NoData -> HomeScreenUiState.Start
