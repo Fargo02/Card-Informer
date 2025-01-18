@@ -1,6 +1,6 @@
-package com.example.cardinformer.core.di
+package com.example.cardinformer.core.data.network.di
 
-import com.example.cardinformer.core.data.CardInfRepositoryImpl
+import com.example.cardinformer.core.data.repository.CardInfRepositoryImpl
 import com.example.cardinformer.core.data.network.AuthorizationInterceptor
 import com.example.cardinformer.core.data.network.BinListApiService
 import com.example.cardinformer.core.data.network.CardInfNetworkClient

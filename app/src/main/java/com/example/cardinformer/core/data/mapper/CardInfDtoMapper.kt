@@ -3,31 +3,23 @@ package com.example.cardinformer.core.data.mapper
 import com.example.cardinformer.core.data.dto.CardInfResponse
 import com.example.cardinformer.core.domain.model.CardInf
 
-fun Result<CardInfResponse>.toCardInf(): Result<CardInf> {
-    val cardInfResponse = this.getOrNull()
-    return if (cardInfResponse != null) {
-        Result.success(
-            CardInf(
-                numberLength = cardInfResponse.number?.length,
-                luhn = cardInfResponse.number?.luhn ?: false,
-                scheme = cardInfResponse.scheme,
-                type = cardInfResponse.type,
-                brand = cardInfResponse.brand,
-                prepaid = cardInfResponse.prepaid,
-                countryNumeric = cardInfResponse.country?.numeric,
-                countryAlpha2 = cardInfResponse.country?.alpha2,
-                countryName = cardInfResponse.country?.name,
-                countryEmoji = cardInfResponse.country?.emoji,
-                countryCurrency = cardInfResponse.country?.currency,
-                countryLatitude = cardInfResponse.country?.latitude,
-                countryLongitude = cardInfResponse.country?.longitude,
-                bankName = cardInfResponse.bank?.name,
-                bankUrl = cardInfResponse.bank?.url,
-                bankPhone = cardInfResponse.bank?.phone,
-                bankCity = cardInfResponse.bank?.city
-            )
-        )
-    } else {
-        Result.failure(exceptionOrNull() ?: Exception("Unknown error occurred"))
-    }
-}
+fun CardInfResponse.toCardInf(bin: String) = CardInf(
+    bin = bin,
+    numberLength = this.number?.length,
+    luhn = this.number?.luhn ?: false,
+    scheme = this.scheme,
+    type = this.type,
+    brand = this.brand,
+    prepaid = this.prepaid,
+    countryNumeric = this.country?.numeric,
+    countryAlpha2 = this.country?.alpha2,
+    countryName = this.country?.name,
+    countryEmoji = this.country?.emoji,
+    countryCurrency = this.country?.currency,
+    countryLatitude = this.country?.latitude,
+    countryLongitude = this.country?.longitude,
+    bankName = this.bank?.name,
+    bankUrl = this.bank?.url,
+    bankPhone = this.bank?.phone,
+    bankCity = this.bank?.city
+)
