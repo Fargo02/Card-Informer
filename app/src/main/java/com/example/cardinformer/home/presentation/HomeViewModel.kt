@@ -25,7 +25,7 @@ class HomeViewModel @Inject constructor(
     val uiState: StateFlow<HomeScreenUiState> = _uiState.asStateFlow()
 
     private val searchDebounceAction: (String) -> Unit = debounce(
-        delayMillis = 2_000L,
+        delayMillis = 3_000L,
         coroutineScope = viewModelScope,
         useLastParam = true
     ) { changedText ->

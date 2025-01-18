@@ -10,9 +10,10 @@ class GetCardInfUseCaseImpl @Inject constructor(
 ) : GetCardInfUseCase {
 
     override suspend operator fun invoke(bin: String): Result<CardInf> {
-        //return cardInfRepository.getCardInf(bin)
+       // return cardInfRepository.getCardInf(bin)
         return Result.success(
             CardInf(
+                bin = bin,
                 numberLength = null,
                 luhn = false,
                 scheme = null,
@@ -30,7 +31,6 @@ class GetCardInfUseCaseImpl @Inject constructor(
                 bankUrl = null,
                 bankPhone = null,
                 bankCity = null
-
             )
         )
     }

@@ -9,15 +9,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun HomeScreenRoute(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = hiltViewModel(),
-    navToHistory: () -> Unit,
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     HomeScreen(
+        modifier = modifier,
         uiState = uiState,
-        navToHistory = navToHistory,
         getInformation = { viewModel.searchDebounce(it) },
         updateInformation = { viewModel.getCardInformation(it) }
     )

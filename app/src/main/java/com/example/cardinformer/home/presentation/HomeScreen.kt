@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,7 +16,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,14 +24,12 @@ import androidx.compose.ui.unit.sp
 import com.example.cardinformer.R
 import com.example.cardinformer.core.composables.BasicButton
 import com.example.cardinformer.core.composables.TextField
-import com.example.cardinformer.core.composables.TopBar
 import com.example.cardinformer.ui.theme.CardInformerTheme
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     uiState: HomeScreenUiState,
-    navToHistory: () -> Unit,
     getInformation: (String) -> Unit,
     updateInformation: (String) -> Unit
 ) {
@@ -42,19 +38,10 @@ fun HomeScreen(
 
     getInformation(binText)
 
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            TopBar(
-                modifier = Modifier.shadow(4.dp),
-                title = stringResource(id = R.string.app_name)
-            )
-        }
-    ) { paddingValues ->
+    Box(modifier = modifier) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
         ) {
             TextField(
                 modifier = Modifier

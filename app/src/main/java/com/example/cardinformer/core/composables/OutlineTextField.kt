@@ -30,7 +30,7 @@ fun TextField(
     textColor: Color = MaterialTheme.colorScheme.onSurface,
     disabledBorderColor: Color = MaterialTheme.colorScheme.onPrimary,
     unfocusedBorderColor: Color = MaterialTheme.colorScheme.onPrimary,
-    focusedBorderColor: Color = MaterialTheme.colorScheme.primary,
+    focusedBorderColor: Color = MaterialTheme.colorScheme.tertiary,
     onValueChange: (String) -> Unit
 ) {
 
