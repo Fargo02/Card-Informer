@@ -91,7 +91,7 @@ private fun HomeScreenError(modifier: Modifier = Modifier) {
     Box(modifier = modifier.fillMaxSize()) {
         Text(
             modifier = Modifier.align(Alignment.Center),
-            text = "Error",
+            text = stringResource(R.string.error),
             color = MaterialTheme.colorScheme.primary,
             fontSize = 28.sp,
             textAlign = TextAlign.Center,

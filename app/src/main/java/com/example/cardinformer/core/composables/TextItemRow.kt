@@ -23,7 +23,7 @@ fun TextItem(label: String, value: String?) {
             color = MaterialTheme.colorScheme.onBackground
         )
         Text(
-            text = value ?: "No",
+            text = value ?: stringResource(id = R.string.no),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.primary
         )
