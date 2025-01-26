@@ -2,6 +2,7 @@ package com.example.cardinformer.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cardinformer.R
 import com.example.cardinformer.core.domain.model.CardInf
 import com.example.cardinformer.core.utils.NetworkError
 import com.example.cardinformer.core.utils.debounce
@@ -24,20 +25,35 @@ class HomeViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<HomeScreenUiState>(HomeScreenUiState.Start)
     val uiState: StateFlow<HomeScreenUiState> = _uiState.asStateFlow()
 
+    private val _inputError = MutableStateFlow(false)
+    val inputError: StateFlow<Boolean> = _inputError.asStateFlow()
+
     private val searchDebounceAction: (String) -> Unit = debounce(
-        delayMillis = 3_000L,
+        delayMillis = 2_000L,
         coroutineScope = viewModelScope,
         useLastParam = true
     ) { changedText ->
-        if (changedText != lastExpression && changedText.isNotBlank()) {
-            lastExpression = changedText
-            getCardInformation(changedText)
+        when {
+            changedText.length < 6 -> {
+                _inputError.value = true
+                _uiState.value = HomeScreenUiState.Error(R.string.enter_the_first_6_8_digits)
+            }
+
+            changedText != lastExpression -> {
+                _inputError.value = false
+                lastExpression = changedText
+                getCardInformation(changedText)
+            }
         }
     }
 
     fun searchDebounce(expression: String) {
-        if (expression.isBlank()) clearSearch()
-        searchDebounceAction(expression)
+        if (expression.isBlank()) {
+            clearSearch()
+            _inputError.value = false
+        } else {
+            searchDebounceAction(expression)
+        }
     }
 
     private fun clearSearch() {
@@ -49,7 +65,7 @@ class HomeViewModel @Inject constructor(
         _uiState.value = HomeScreenUiState.Loading
         val result: Result<CardInf> = getCardInfUseCase(bin.replace("\\s".toRegex(), ""))
         val newState = when (result.exceptionOrNull()) {
-            is NetworkError.ServerError -> HomeScreenUiState.Error
+            is NetworkError.ServerError -> HomeScreenUiState.Error(R.string.server_error)
             is NetworkError.NoData -> HomeScreenUiState.Start
             is NetworkError.NoInternet -> HomeScreenUiState.NoInternet
             else -> result.getOrNull()?.let {
@@ -57,6 +73,5 @@ class HomeViewModel @Inject constructor(
             } ?: HomeScreenUiState.Start
         }
         _uiState.value = newState
-
     }
 }

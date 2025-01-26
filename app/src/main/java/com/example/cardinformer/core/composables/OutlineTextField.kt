@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cardinformer.R
 import com.example.cardinformer.ui.theme.CardInformerTheme
+import java.lang.Error
 
 @Composable
 fun TextField(
@@ -33,13 +34,15 @@ fun TextField(
     disabledBorderColor: Color = MaterialTheme.colorScheme.onPrimary,
     unfocusedBorderColor: Color = MaterialTheme.colorScheme.onPrimary,
     focusedBorderColor: Color = MaterialTheme.colorScheme.tertiary,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    isError: Boolean = false
 ) {
 
     OutlinedTextField(
         modifier = modifier,
         value = text,
         onValueChange = onValueChange,
+        isError = isError,
         placeholder = {
             Text(
                 text = placeHolderText,

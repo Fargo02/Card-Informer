@@ -1,5 +1,6 @@
 package com.example.cardinformer.home.presentation
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,12 +32,11 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     uiState: HomeScreenUiState,
     getInformation: (String) -> Unit,
-    updateInformation: (String) -> Unit
+    updateInformation: (String) -> Unit,
+    inputError: Boolean
 ) {
 
     var binText by rememberSaveable { mutableStateOf("") }
-
-    getInformation(binText)
 
     Box(modifier = modifier) {
         Column(
@@ -47,21 +47,24 @@ fun HomeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
+                isError = inputError,
                 text = binText,
                 placeHolderText = stringResource(R.string.enter_the_bin_of_the_card),
                 singleLine = true,
-                onValueChange = { newText -> binText = newText }
+                onValueChange = { newText ->
+                    binText = newText
+                    getInformation(binText)
+                }
             )
             when (uiState) {
                 is HomeScreenUiState.Start -> HomeScreenStart()
-                is HomeScreenUiState.Error -> HomeScreenError()
+                is HomeScreenUiState.Error -> HomeScreenError(messageId = uiState.messageId)
                 is HomeScreenUiState.Loading -> HomeScreenLoading()
+                is HomeScreenUiState.Content -> HomeScreenContent(card = uiState.card)
                 is HomeScreenUiState.NoInternet -> HomeScreenNoInternet(
                     getInformation = updateInformation,
                     bin = binText
                 )
-
-                is HomeScreenUiState.Content -> HomeScreenContent(card = uiState.card)
             }
         }
     }
@@ -76,7 +79,7 @@ private fun HomeScreenStart(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = stringResource(R.string.statrt_information),
+            text = stringResource(R.string.start_information),
             style = MaterialTheme.typography.bodyLarge.copy(
                 fontSize = 20.sp,
                 textAlign = TextAlign.Center,
@@ -87,11 +90,14 @@ private fun HomeScreenStart(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun HomeScreenError(modifier: Modifier = Modifier) {
+private fun HomeScreenError(
+    modifier: Modifier = Modifier,
+    @StringRes messageId: Int
+) {
     Box(modifier = modifier.fillMaxSize()) {
         Text(
             modifier = Modifier.align(Alignment.Center),
-            text = stringResource(R.string.error),
+            text = stringResource(messageId),
             color = MaterialTheme.colorScheme.primary,
             fontSize = 28.sp,
             textAlign = TextAlign.Center,
