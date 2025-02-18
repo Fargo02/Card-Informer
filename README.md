@@ -2,7 +2,7 @@
 
 **Card Informer** — то Android-приложение, которое определяет данные банка по BIN карты. Пользователи могут вводить BIN, а приложение с использованием API BINLIST.NET предоставляет подробную информацию о банке, выпустившем карту.
 
-<img src="pictures/Home.png" alt="Home" width="33%"/> <img src="pictures/Search.png" alt="Search" width="33%"/> <img src="pictures/Storage.png" alt="Storage" width="33%"/>
+<img src="pictures/Home.png" alt="Home" width="30%"/> <img src="pictures/Search.png" alt="Search" width="30%"/> <img src="pictures/Storage.png" alt="Storage" width="30%"/>
 
 ## Функциональность
 - 🔍 **Поиск по BIN ** —  введите BIN карты для получения информации о банке.
